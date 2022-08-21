@@ -1,0 +1,74 @@
+spring:
+  profiles:
+    group:
+      development:
+        - dev
+      dockerProd:
+        - stg
+      production:
+        - prod
+logging:
+  level:
+    root: info
+    org.springframework.boot.autoconfigure.logging: info
+    org.springframework.jdbc.core: info
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    default:
+      jdbc-url: jdbc:h2:tcp://localhost:1521/testdb
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+    proc:
+      jdbc-url: jdbc:mysql://localhost:3306/SimpleSettleBatch?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  batch:
+    jdbc:
+      initialize-schema: always
+
+---
+spring:
+  config:
+    activate:
+      on-profile: stg
+  datasource:
+    default:
+      jdbc-url: jdbc:mysql://localhost:3306/SimpleSettleBatch?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    proc:
+      jdbc-url: jdbc:oracle:thin:@10.203.7.71:1538/DEVSSGDB
+      username: DEVSSG
+      password: d2vssg12#
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+  batch:
+    jdbc:
+      initialize-schema: always
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    default:
+      jdbc-url: jdbc:mysql://localhost:3306/SimpleSettleBatch?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    proc:
+      jdbc-url: jdbc:oracle:thin:@10.203.7.71:1538/DEVSSGDB
+      username: DEVSSG
+      password: d2vssg12#
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+  batch:
+    jdbc:
+      initialize-schema: always
